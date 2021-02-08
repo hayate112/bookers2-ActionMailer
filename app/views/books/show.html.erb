@@ -20,9 +20,7 @@
           <td id='favorites_<%= @book.id %>'>
             <%= render partial: 'favorites/favorite-btn', locals: { book: @book } %>
           </td>
-          <td>
-            <p>コメント数：<%= @book.book_comments.count %></p>
-          </td>
+          <td id="comments-count_<%= @book.id %>">コメント数：<%= @book.book_comments.count %></td>
           <td>
             <% if @book.user == current_user %>
               <%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %>
@@ -35,10 +33,13 @@
           </td>
         </tr>
       </table>
-      <table id='comments_area'>
+      <table class='comments_area'>
         <%= render partial: 'book_comments/index', locals: { book: @book } %>
       </table>
-      <%= render partial: 'book_comments/form', locals: { book: @book, book_comment: @book_comment } %>
+      <%= form_with model:[@book, @book_comment] do |f| %>
+        <%= f.text_area :comment, size:'90x5' %>
+        <%= f.submit "送信" %>
+      <% end %>
     </div>
   </div>
 </div>
