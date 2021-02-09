@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   get 'search' => 'search#search'
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+  }
+
   root 'homes#top'
   get 'home/about' => 'homes#about'
   resources :books do
